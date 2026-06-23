@@ -1,0 +1,107 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+Table products {
+  id integer [primary key]
+  name varchar
+  price float
+}
+
+Records products(id,name,price){
+  0,'Coke',30.00
+  1,'Water',25.00
+  2,'Sode',70
+}
+
+Table rivals {
+  id integer [primary key]
+  name varchar
+}
+
+Records rivals (id,name){
+  1, 'Tomateros'
+  2, 'Charros'
+  3, 'Canheros'
+  4, 'Mayos'
+  5, 'Aguilas'  
+}
+
+Table games {
+  id integer [primary key]
+  rival_id integer
+  date date
+}
+
+Records games(id,rival_id, date){
+  1,1,'2026-06-17'
+  2,2,'2026-06-26'
+  3,3,'2026-06-09'
+}
+
+Table zones{
+  id integer [primary key]
+  name varchar
+}
+
+Records zones(id,name){
+  1,'Norte'
+  2, 'Central'
+  3, 'Superior'
+}
+
+  Table VIEW_registers [headercolor: #999999, note: 'VIEW — registro agregado por producto'] {
+    product varchar
+    initial integer
+    added integer
+    total integer [note: 'computed: initial + added']
+    selled integer
+    remaining integer [note: 'computed: total - selled']
+    revenue integer [note: 'computed: selled * unit_price']
+
+    unit_price integer [note: 'INTERNAL — no displayed, used for revenue']
+    product_id integer [note: 'INTERNAL — join key']
+    zone_id integer [note: 'INTERNAL — join key']
+    game_id integer [note: 'INTERNAL — join key']
+  }
+
+
+Table records{
+  id integer [primary key]
+  product_id integer
+  zone_id integer
+  game_id integer
+  initial integer
+  added integer
+  remaining integer
+  merma integer
+}
+
+Table users {
+  id integer [primary key]
+  username varchar
+  role varchar
+  created_at timestamp
+}
+
+
+Ref rival_games: rivals.id < games.rival_id
+
+Ref games_records: games.id < records.game_id //Not clear muchos amuchos
+
+Ref zones_records: zones.id - records.zone_id //Not clear
+Ref product_records: products.id > records.product_id
+Records users(id, username, role) {
+  0, 'Admin', 'admin'
+  1, 'Dario', 'user'
+}
+
+
+
+
+Ref: "records"."product_id" < "VIEW_registers"."product_id"
+
+Ref: "records"."game_id" < "VIEW_registers"."game_id"
+
+Ref: "records"."zone_id" < "VIEW_registers"."zone_id"
+
+Ref: "VIEW_registers"."unit_price" < "products"."price"
