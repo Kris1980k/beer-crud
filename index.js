@@ -21,8 +21,11 @@ app.get('/home', (req,res) => {
     });    
 })
 
-app.get('/view', (req,res) => {
-    const getViewList = getView();
+app.get('/view', (req,res) => {    
+    const getViewList = getView().then((viewList) => {
+                
+        res.send(viewList);
+    })
 })
 
 app.listen(port, () => {
