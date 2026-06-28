@@ -1,6 +1,6 @@
 require('dotenv').config()
 
-const {getView, getProducts} = require('./client.js');
+const {getView, getProducts, getRivals} = require('./client.js');
 const express = require('express');
 const path = require('node:path')
 const app = express();
@@ -10,7 +10,7 @@ const port = 3000;;
 app.engine('.html', require('ejs').__express);
 
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(express.json());
 app.set('view engine', 'html');
 
 app.get('/home', (req,res) => {
@@ -21,10 +21,18 @@ app.get('/home', (req,res) => {
     });    
 })
 
-app.get('/view', (req,res) => {    
-    const getViewList = getView().then((viewList) => {
-                
+app.get('/view', (req,res) => {
+    console.log(req.body);
+    var game = req.body.game;
+    var zone = req.body.zone;
+    const getViewList = getView(game,zone).then((viewList) => {                
         res.send(viewList);
+    })
+})
+
+app.get('/rivals', (req,res) => {
+    const getRivalList = getRivals().then((rivalList) => {
+        res.send(rivalList)
     })
 })
 
