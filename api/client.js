@@ -48,4 +48,21 @@ async function getRivals(){
     return res.rows;
 }
 
-module.exports = { getProducts, getView, getRivals}
+async function getGames(){
+    
+    const Client = require('pg').Client
+    
+    const CLIENT = await new Client({
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database: process.env.DB_NAME
+    }).connect()
+
+    const res = await CLIENT.query(`SELECT * FROM games`);
+    
+    await CLIENT.end()
+    
+    return res.rows;
+}
+
+module.exports = { getProducts, getView, getRivals, getGames};
