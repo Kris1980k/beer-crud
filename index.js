@@ -20,10 +20,26 @@ app.get('/', (req, res) => {
 })
 
 app.get('/home', (req,res) => {
-    const getProductList = getProducts().then((productList) => {
+    var getProductList = getProducts().then((productList) => {
         console.log(productList);
         
         res.render('index', {productList:productList});
+    });    
+})
+
+app.get('/products', (req,res) => {
+    var getProductList = getProducts().then((productList) => {
+        console.log(productList);
+        
+        res.render('products', {productList:productList});
+    });    
+})
+
+app.get('/teams', (req,res) => {
+    var getRivalList = getRivals().then((rivalList) => {
+        console.log(rivalList);
+        
+        res.render('teams', {rivalList:rivalList});
     });    
 })
 
@@ -39,6 +55,12 @@ app.get('/api/views', (req,res) => {
 app.get('/api/rivals', (req,res) => {
     const getRivalList = getRivals().then((rivalList) => {
         res.send(rivalList)
+    })
+})
+
+app.get('/api/products', (req,res) => {
+    const getProductList = getProducts().then((productList) => {
+        res.send(productList)
     })
 })
 
