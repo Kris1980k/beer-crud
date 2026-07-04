@@ -9,13 +9,15 @@ export async function fetchRivals(){
 }
 
 export async function fetchGames(){
-    fetch('/api/games', {
+    let response= await fetch('/api/games', {
         method: 'GET',
     })
     .then(res => res.json())
     .then(data => {
-        console.log(data);        
+        return data;
     })
+
+    return response;
 }
 
 export async function fetchViews(){

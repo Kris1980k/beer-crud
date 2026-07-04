@@ -34,7 +34,7 @@ async function getRivals() {
 }
 
 async function getGames() {
-    const res = await pool.query('SELECT * FROM games');
+    const res = await pool.query(`SELECT rivals.name, to_char(games.date,'dd/MM/yyyy') AS date FROM games INNER JOIN rivals ON games.rival_id = rivals.id ORDER BY date DESC`);
     return res.rows;
 }
 
