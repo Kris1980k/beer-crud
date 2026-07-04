@@ -1,68 +1,41 @@
-async function getProducts(){
-    
-    const Client = require('pg').Client
-    
-    const CLIENT = await new Client({
-        user: process.env.DB_USER,
-        password: process.env.DB_PASSWORD,
-        database: process.env.DB_NAME
-    }).connect()
+const { Pool } = require('pg');
 
-    const res = await CLIENT.query('select * from products')
-    
-    await CLIENT.end()
+const pool = new Pool({
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    host:  process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    max: 10,                     // max simultaneous connections in pool
+    idleTimeoutMillis: 30000,    // close idle clients after 30s
+    connectionTimeoutMillis: 5000 // fail fast if can't get a connection
+});
+
+async function getProducts() {
+    const res = await pool.query('SELECT * FROM products');
     return res.rows;
 }
 
-async function getView(game, zone){
-    
-    const Client = require('pg').Client
-    
-    const CLIENT = await new Client({
-        user: process.env.DB_USER,
-        password: process.env.DB_PASSWORD,
-        database: process.env.DB_NAME
-    }).connect()
-
-    const res = await CLIENT.query(`SELECT * FROM view_registers WHERE game_id = ${game} AND zone_id = ${zone};`);
-    
-    await CLIENT.end()
-    
+async function getView(game, zone) {
+    const res = await pool.query(
+        `SELECT zone_id, game_id, to_char(games.date,'dd/MM/yyyy') AS date, rivals.name
+         FROM view_registers
+         INNER JOIN games ON view_registers.game_id = games.id
+         INNER JOIN rivals ON games.rival_id = rivals.id
+         WHERE view_registers.game_id = $1 AND view_registers.zone_id = $2`,
+        [game, zone]
+    );
     return res.rows;
 }
 
-async function getRivals(){
-    
-    const Client = require('pg').Client
-    
-    const CLIENT = await new Client({
-        user: process.env.DB_USER,
-        password: process.env.DB_PASSWORD,
-        database: process.env.DB_NAME
-    }).connect()
-
-    const res = await CLIENT.query(`SELECT * FROM rivals`);
-    
-    await CLIENT.end()
-    
+async function getRivals() {
+    const res = await pool.query('SELECT * FROM rivals');
     return res.rows;
 }
 
-async function getGames(){
-    
-    const Client = require('pg').Client
-    
-    const CLIENT = await new Client({
-        user: process.env.DB_USER,
-        password: process.env.DB_PASSWORD,
-        database: process.env.DB_NAME
-    }).connect()
-
-    const res = await CLIENT.query(`SELECT * FROM games`);
-    
-    await CLIENT.end()
-    
+async function getGames() {
+    const res = await pool.query('SELECT * FROM games');
     return res.rows;
 }
 
-module.exports = { getProducts, getView, getRivals, getGames};
+module.exports = { getProducts, getView, getRivals, getGames };

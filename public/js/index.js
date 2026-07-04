@@ -5,13 +5,18 @@ const tableBody = document.getElementById("table-body");
 var rivalList;
 var gameList;
 var viewList;
-
+var date = new Date();
 
 document.addEventListener('DOMContentLoaded', () => {
-    
+    console.log(date);    
     console.log("DOM fully loaded and parsed");
-    gameList = fetchGames().then(() => {
-        gameList.forEach(game => {
+    gameList = fetchGames().then((res) => {        
+    })
+})
+
+/*
+
+res.forEach(game => {
             let row = document.createElement('tr');
 
             let tdRival = document.createElement('td');
@@ -31,5 +36,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
             tableBody.appendChild(row);
         });
-    })
-})
+*/

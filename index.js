@@ -5,7 +5,7 @@ const {getView, getProducts, getRivals, getGames} = require("./api/client.js");
 const express = require('express');
 const path = require('node:path');
 const app = express();
-const port = 3000;;
+const port = 8888;
 
 
 app.engine('.html', require('ejs').__express);
@@ -13,6 +13,7 @@ app.engine('.html', require('ejs').__express);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.set('view engine', 'html');
+
 
 app.get('/', (req, res) => {
     res.render('index');
