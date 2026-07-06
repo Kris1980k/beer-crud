@@ -1,4 +1,4 @@
-import { fetchGames, fetchRivals, fetchViews} from "./apiRequest.js";
+import { fetchGames, fetchRivals} from "./apiRequest.js";
 
 const tableBody = document.getElementById("table-body");
 
@@ -7,19 +7,28 @@ var gameList;
 var viewList;
 var date = new Date();
 
+const getRegistries =(id)=>{
+    //const getRegistry = await fetchRegistry()
+    console.log("Registry: ", id);
+};
+
 document.addEventListener('DOMContentLoaded', () => {
     console.log(date);    
     console.log("DOM fully loaded and parsed");
     fetchGames().then((res) => {
-        console.log(":v", res);
+        console.log(":sv", res);
         
         res.forEach(game => {
-            let row = document.createElement('tr');
-
+            console.log(game);
+            
+            let row = document.createElement('tr');            
             let tdRival = document.createElement('td');
             let tdRivalP = document.createElement('p');
+            let id_td= "td-game-"+game.id;
+            tdRival.setAttribute("id", id_td);
             tdRivalP.innerText = game.name;
 
+            tdRival.addEventListener("click",function (){ getRegistries (game.id)})
             tdRival.appendChild(tdRivalP);
 
             let tdDate = document.createElement('td');

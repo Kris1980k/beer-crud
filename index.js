@@ -1,7 +1,7 @@
 require('dotenv').config()
 
 
-const {getView, getProducts, getRivals, getGames} = require("./api/client.js");
+const {getView, getProducts, getRivals, getGames, getRegistries} = require("./api/client.js");
 const express = require('express');
 const path = require('node:path');
 const app = express();
@@ -16,7 +16,20 @@ app.set('view engine', 'html');
 
 
 app.get('/', (req, res) => {
-    res.render('index');
+    res.redirect('home');
+})
+
+app.get('/home/report', (req,res) => {
+    let data = req.query;
+    /*
+    /api/registries?nombre=kris&apellido=diaz
+    */    
+    let id ={
+        game: data.game,
+        zone: data.zone
+    }
+    //console.log(id);
+    res.render('report', {id:id})
 })
 
 app.get('/home', (req,res) => {
@@ -26,6 +39,7 @@ app.get('/home', (req,res) => {
         res.render('index', {productList:productList});
     });    
 })
+
 
 app.get('/products', (req,res) => {
     var getProductList = getProducts().then((productList) => {
@@ -43,12 +57,20 @@ app.get('/teams', (req,res) => {
     });    
 })
 
-app.get('/api/views', (req,res) => {
-    console.log(req.body);
+app.get('/reports', (req,res) => {
+    var getReportList = getReports().then((reportList) => {
+        console.log(reportList);        
+        res.render('reports', {productList:productList});
+    });    
+})
+
+app.post('/api/registries', (req,res) => {
+    console.log(req.body," holaa");
     var game = req.body.game;
     var zone = req.body.zone;
-    const getViewList = getView(game,zone).then((viewList) => {
-        res.send(viewList);
+    const getRegistryList = getRegistries(game,zone).then((registryList) => {
+        console.log(registryList);        
+        res.send(registryList);
     })
 })
 

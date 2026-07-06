@@ -11,11 +11,11 @@ SELECT
   (r.initial + r.added)               AS total,
   (r.initial + r.added - r.remaining) AS selled,
   r.remaining                         AS remaining,
+  p.price                             AS unit_price,
   (r.initial + r.added - r.remaining)
     * p.price                         AS revenue,
 
   -- Internal fields used for joins / further filtering
-  p.price                             AS unit_price,
   r.product_id                        AS product_id,
   r.zone_id                           AS zone_id,
   r.game_id                           AS game_id
