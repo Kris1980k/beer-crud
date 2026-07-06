@@ -1,11 +1,11 @@
-import { fetchRegistry} from "./apiRequest.js";
+import { fetchSales} from "./apiRequest.js";
 
 const id = window.__ID__;
 const tableBody = document.getElementById("table-body");
 
 document.addEventListener("DOMContentLoaded", () =>{
-    fetchRegistry(id).then((res) =>{
-        console.log(res);
+    fetchSales(id).then((res) =>{
+        console.log("???",res);
 
 
         res.forEach((product,i) => {

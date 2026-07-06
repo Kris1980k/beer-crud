@@ -1,7 +1,7 @@
 require('dotenv').config()
 
 
-const {getView, getProducts, getRivals, getGames, getRegistries} = require("./api/client.js");
+const {getView, getProducts, getRivals, getGames, getRegistries, getSales} = require("./api/client.js");
 const express = require('express');
 const path = require('node:path');
 const app = express();
@@ -33,17 +33,13 @@ app.get('/home/report', (req,res) => {
 })
 
 app.get('/home', (req,res) => {
-    var getProductList = getProducts().then((productList) => {
-        console.log(productList);
-        
-        res.render('index', {productList:productList});
-    });    
+    res.render('index', {});
 })
 
 
 app.get('/products', (req,res) => {
     var getProductList = getProducts().then((productList) => {
-        console.log(productList);
+        //console.log(productList);
         
         res.render('products', {productList:productList});
     });    
@@ -64,13 +60,21 @@ app.get('/reports', (req,res) => {
     });    
 })
 
-app.post('/api/registries', (req,res) => {
+/*app.post('/api/registries', (req,res) => {
+    console.log(req.body);
+    let game = req.body.game;
+    var getSalesList = getSales(game).then((saleList) => {
+        console.log(saleList);        
+    })
+})*/
+
+app.post('/api/sales', (req,res) => {
     console.log(req.body," holaa");
     var game = req.body.game;
     var zone = req.body.zone;
-    const getRegistryList = getRegistries(game,zone).then((registryList) => {
-        console.log(registryList);        
-        res.send(registryList);
+    const getSalesList = getSales(game,zone).then((saleList) => {
+        console.log(saleList);        
+        res.send(saleList);
     })
 })
 

@@ -22,8 +22,8 @@ export async function fetchGames(){
     return response;
 }
 
-export async function fetchRegistry(id){
-    let response= await fetch('/api/registries', {
+export async function fetchSales(id){
+    let response= await fetch('/api/sales', {
         method: 'POST',
         headers: {
             "Content-Type": "application/json",

@@ -16,10 +16,10 @@ async function getProducts() {
     return res.rows;
 }
 
-async function getRegistries(game, zone) {
+async function getRegistries(game) {
     const res = await pool.query(
-        `SELECT z, FROM view_registers WHERE game_id = $1 AND zone_id = $2`,
-        [game, zone]
+        `SELECT zone_id FROM view_registers WHERE game_id = $1`,
+        [game]
     );
     return res.rows;
 }
@@ -50,4 +50,4 @@ async function getGames() {
     const res = await pool.query(`SELECT games.id,rivals.name, to_char(games.date,'dd/MM/yyyy') AS date FROM games INNER JOIN rivals ON games.rival_id = rivals.id ORDER BY date DESC`);
     return res.rows;
 }
-module.exports = { getProducts, getRegistries, getRivals, getGames };
+module.exports = { getProducts, getRegistries, getRivals, getGames, getSales };

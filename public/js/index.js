@@ -9,17 +9,17 @@ var date = new Date();
 
 const getRegistries =(id)=>{
     //const getRegistry = await fetchRegistry()
-    console.log("Registry: ", id);
+    window.location.replace("home/report");
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log(date);    
+    //console.log(date);    
     console.log("DOM fully loaded and parsed");
     fetchGames().then((res) => {
-        console.log(":sv", res);
+        //console.log(":sv", res);
         
         res.forEach(game => {
-            console.log(game);
+            //console.log(game);
             
             let row = document.createElement('tr');            
             let tdRival = document.createElement('td');
