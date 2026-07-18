@@ -1,4 +1,4 @@
-import { fetchRivals, fetchViews, fetchProducts} from "./apiRequest.js";
+import { fetchRivals, fetchProducts} from "./apiRequest.js";
 
 const tableBody = document.getElementById("table-body");
 

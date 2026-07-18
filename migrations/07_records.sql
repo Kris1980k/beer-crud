@@ -1,5 +1,5 @@
 -- Migration: Create records table
--- Depends on: products (01), zones (03), games (05)
+-- Depends on: products (01), zones (03), games (06)
 
 CREATE TABLE records (
   id         SERIAL  PRIMARY KEY,
