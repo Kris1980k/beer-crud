@@ -1,7 +1,7 @@
 require('dotenv').config()
 
 
-const {getView, getProducts, getRivals, getGames, getRegistries, getSales} = require("./api/client.js");
+const {getView, getProducts,getZones,getSeries,getSeriesView, getRivals, getGames, getRegistries, getSales} = require("./api/client.js");
 const express = require('express');
 const path = require('node:path');
 const app = express();
@@ -84,6 +84,18 @@ app.get('/api/rivals', (req,res) => {
     })
 })
 
+app.get('/api/series', (req,res) => {
+    const getSerieList = getSeries().then((serieList) => {
+        res.send(serieList)
+    })
+})
+
+app.get('/api/seriesView', (req,res) => {
+    const getSerieViewList = getSeriesView().then((serieViewList) => {
+        res.send(serieViewList)
+    })
+})
+
 app.get('/api/products', (req,res) => {
     const getProductList = getProducts().then((productList) => {
         res.send(productList)
@@ -91,8 +103,15 @@ app.get('/api/products', (req,res) => {
 })
 
 app.get('/api/games', (req,res) => {
-    const getGameList = getGames().then((gameList) => {
+    let serie_id = req.body.serie_id;
+    const getGameList = getGames(serie_id).then((gameList) => {
         res.send(gameList)
+    })
+})
+
+app.get('/api/zones', (req,res) => {
+    const getZoneList = getZones().then((zoneList) => {
+        res.send(zoneList);
     })
 })
 

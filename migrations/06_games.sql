@@ -9,8 +9,14 @@ CREATE TABLE games (
 
 INSERT INTO games (id, series_id, date) VALUES
   (1, 1, '2026-06-17'),
-  (2, 2, '2026-06-26'),
-  (3, 3, '2026-06-09');
+  (2, 1, '2026-06-18'),
+  (3, 1, '2026-06-19'),
+  (4, 2, '2026-06-26'),
+  (5, 2, '2026-06-27'),
+  (6, 2, '2026-06-28'),
+  (7, 3, '2026-06-09'),
+  (8, 3, '2026-06-10'),
+  (9, 3, '2026-06-11');
 
 -- Ajusta start_date / end_date de cada série com base nos jogos reais
 UPDATE series s

@@ -10,6 +10,28 @@ export async function fetchRivals(){
     return response;
 }
 
+export async function fetchSeries(){
+    let response= await fetch('/api/series', {
+        method: 'GET',
+    })
+    .then(res => res.json())
+    .then(data => {
+        return data;
+    })
+    return response;
+}
+
+export async function fetchSeriesView(){
+    let response= await fetch('/api/seriesView', {
+        method: 'GET',
+    })
+    .then(res => res.json())
+    .then(data => {
+        return data;
+    })
+    return response;
+}
+
 export async function fetchGames(){
     let response= await fetch('/api/games', {
         method: 'GET',

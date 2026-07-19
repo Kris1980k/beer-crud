@@ -1,9 +1,9 @@
-import { fetchGames, fetchRivals} from "./apiRequest.js";
+import {fetchSeriesView, fetchRivals} from "./apiRequest.js";
 
 const tableBody = document.getElementById("table-body");
 
 var rivalList;
-var gameList;
+var serieList;
 var viewList;
 var date = new Date();
 
@@ -15,30 +15,50 @@ const getRegistries =(id)=>{
 document.addEventListener('DOMContentLoaded', () => {
     //console.log(date);    
     console.log("DOM fully loaded and parsed");
-    fetchGames().then((res) => {
-        //console.log(":sv", res);
+    fetchSeriesView().then((res) => {
+        console.log("Series: \n", res);
         
-        res.forEach(game => {
-            //console.log(game);
+        res.forEach(serie => {
+            //console.log(serie);
             
-            let row = document.createElement('tr');            
+            let row = document.createElement('tr');
+
+            //Serie Id
+            let tdSerieId = document.createElement('td');
+            let tdSerieIdP = document.createElement('p');
+            let id_tdSerieId= "td-serie-"+serie.series_id;
+            tdSerieId.setAttribute("id", id_tdSerieId);
+            tdSerieIdP.innerText = serie.series_id;
+
+            tdSerieId.addEventListener("click",function (){ getRegistries (serie.series_id)})
+            tdSerieId.appendChild(tdSerieIdP);
+
+            //Rival
+
             let tdRival = document.createElement('td');
             let tdRivalP = document.createElement('p');
-            let id_td= "td-game-"+game.id;
-            tdRival.setAttribute("id", id_td);
-            tdRivalP.innerText = game.name;
+            tdRivalP.innerText = serie.rival;
 
-            tdRival.addEventListener("click",function (){ getRegistries (game.id)})
             tdRival.appendChild(tdRivalP);
 
-            let tdDate = document.createElement('td');
-            let tdDateP = document.createElement('p');
-            tdDateP.innerText = game.date;
+            //Start Date
+            let tdStartDate = document.createElement('td');
+            let tdStartDateP = document.createElement('p');
+            tdStartDate.innerText = serie.start_date;
 
-            tdDate.appendChild(tdDateP);
+            tdStartDate.appendChild(tdStartDateP);
+            //End Date
+            let tdEndDate = document.createElement('td');
+            let tdEndDateP = document.createElement('p');
+            tdEndDate.innerText = serie.end_date;
 
+            tdEndDate.appendChild(tdEndDateP);
+            // Append data
+
+            row.appendChild(tdSerieId);
             row.appendChild(tdRival);
-            row.appendChild(tdDate);
+            row.appendChild(tdStartDate);
+            row.appendChild(tdEndDate);
 
             tableBody.appendChild(row);
         });
@@ -47,22 +67,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
 /*
 
-res.forEach(game => {
+res.forEach(serie => {
             let row = document.createElement('tr');
 
-            let tdRival = document.createElement('td');
-            let tdRivalP = document.createElement('p');
-            tdRivalP.innerText = game.rival_id;
+            let tdSerie = document.createElement('td');
+            let tdSerieP = document.createElement('p');
+            tdSerieP.innerText = serie.rival_id;
 
-            tdRival.appendChild(tdRivalP);
+            tdSerie.appendChild(tdSerieP);
 
             let tdDate = document.createElement('td');
             let tdDateP = document.createElement('p');
-            tdDateP.innerText = game.date;
+            tdDateP.innerText = serie.date;
 
             tdDate.appendChild(tdDateP);
 
-            row.appendChild(tdRival);
+            row.appendChild(tdSerie);
             row.appendChild(tdDate);
 
             tableBody.appendChild(row);

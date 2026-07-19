@@ -46,8 +46,27 @@ async function getRivals() {
     return res.rows;
 }
 
-async function getGames() {
-    const res = await pool.query(`SELECT games.id,rivals.name, to_char(games.date,'dd/MM/yyyy') AS date FROM games INNER JOIN rivals ON games.rival_id = rivals.id ORDER BY date DESC`);
+async function getSeries() {
+    const res = await pool.query('SELECT * FROM series');
     return res.rows;
 }
-module.exports = { getProducts, getRegistries, getRivals, getGames, getSales };
+
+async function getSeriesView() {
+    const res = await pool.query('SELECT * FROM view_series');
+    return res.rows;
+}
+
+async function getZones() {
+    const res = await pool.query('SELECT * FROM zones');
+    return res.rows;
+}
+
+async function getGames(serie_id) {
+    const res = await pool.query(`SELECT * from games where games.series_id =$1  ORDER BY date DESC`,
+        [serie_id]
+    );
+    console.log(res.rows);
+    
+    return res.rows;
+}
+module.exports = { getProducts, getRegistries, getRivals, getGames, getZones, getSales, getSeries,getSeriesView };
