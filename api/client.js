@@ -62,7 +62,7 @@ async function getZones() {
 }
 
 async function getGames(serie_id) {
-    const res = await pool.query(`SELECT * from games where games.series_id =$1  ORDER BY date DESC`,
+    const res = await pool.query(`SELECT id,series_id,to_char(date,'dd/MM/yyyy') AS date  from games where games.series_id =$1  ORDER BY date DESC`,
         [serie_id]
     );
     console.log(res.rows);

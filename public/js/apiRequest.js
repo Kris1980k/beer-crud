@@ -32,9 +32,14 @@ export async function fetchSeriesView(){
     return response;
 }
 
-export async function fetchGames(){
+export async function fetchGames(serie_id){    
+    
     let response= await fetch('/api/games', {
-        method: 'GET',
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({'serie_id':serie_id})
     })
     .then(res => res.json())
     .then(data => {

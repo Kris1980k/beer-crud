@@ -73,7 +73,7 @@ app.post('/api/sales', (req,res) => {
     var game = req.body.game;
     var zone = req.body.zone;
     const getSalesList = getSales(game,zone).then((saleList) => {
-        console.log(saleList);        
+        console.log(saleList);
         res.send(saleList);
     })
 })
@@ -102,7 +102,7 @@ app.get('/api/products', (req,res) => {
     })
 })
 
-app.get('/api/games', (req,res) => {
+app.post('/api/games', (req,res) => {
     let serie_id = req.body.serie_id;
     const getGameList = getGames(serie_id).then((gameList) => {
         res.send(gameList)

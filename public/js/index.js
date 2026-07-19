@@ -7,8 +7,9 @@ var serieList;
 var viewList;
 var date = new Date();
 
-const getRegistries =(id)=>{
+const getRegistries =(serie_id)=>{
     //const getRegistry = await fetchRegistry()
+    sessionStorage.setItem('serie_id',serie_id);
     window.location.replace("home/report");
 };
 

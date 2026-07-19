@@ -1,10 +1,40 @@
-import { fetchSales} from "./apiRequest.js";
+import { fetchSales,fetchGames} from "./apiRequest.js";
 
-const id = window.__ID__;
 const tableBody = document.getElementById("table-body");
 
 document.addEventListener("DOMContentLoaded", () =>{
-    fetchSales(id).then((res) =>{
+    const serie_id = parseInt(sessionStorage.getItem('serie_id'));
+    const games_btn_list = document.getElementById("games-div");
+    console.log(serie_id);
+    
+    fetchGames(serie_id).then((res) =>{
+        res.forEach(game => {
+            //Set btn
+            let btn = document.createElement('button');
+            btn.classList.add('list-group-item');
+            btn.classList.add('list-group-item-action');
+
+            let btnP = document.createElement('p');
+            btnP.innerText = game.date;
+
+            btn.appendChild(btnP);
+            games_btn_list.appendChild(btn);
+
+        });
+        /*
+        <div class="list-group">
+  <button type="button" class="list-group-item list-group-item-action active" aria-current="true">
+    The current button
+  </button>
+  <button type="button" class="list-group-item list-group-item-action">A second button item</button>
+  <button type="button" class="list-group-item list-group-item-action">A third button item</button>
+  <button type="button" class="list-group-item list-group-item-action">A fourth button item</button>
+  <button type="button" class="list-group-item list-group-item-action" disabled>A disabled button item</button>
+</div>
+        */
+    })
+    /*
+    fetchSales(serie_id,1).then((res) =>{
         console.log("???",res);
 
 
@@ -27,6 +57,7 @@ document.addEventListener("DOMContentLoaded", () =>{
 
             tableBody.appendChild(tr);
         });
-    })
+    })*/
+    
     })
 
